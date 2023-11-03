@@ -1,0 +1,5 @@
+package com.SiGroup.dao;
+
+public interface DemoRepository {
+
+}

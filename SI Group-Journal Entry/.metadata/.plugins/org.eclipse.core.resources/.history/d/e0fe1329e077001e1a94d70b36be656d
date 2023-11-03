@@ -1,0 +1,11 @@
+package com.SiGroup.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.SiGroup.entites.ImageData;
+
+public interface StorageRepository  extends JpaRepository<ImageData,Long>{
+
+	
+	
+}

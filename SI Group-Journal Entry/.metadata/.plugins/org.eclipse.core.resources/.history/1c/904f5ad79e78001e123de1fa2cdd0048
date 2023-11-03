@@ -1,0 +1,41 @@
+package com.SiGroup.service;
+
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.SiGroup.dao.StorageRepository;
+import com.SiGroup.dms.util.ImageUtils;
+import com.SiGroup.entites.ImageData;
+
+import net.bytebuddy.dynamic.DynamicType.Builder.FieldDefinition.Optional;
+
+@Service
+public class StorageService {
+
+	
+	@Autowired
+    private StorageRepository repository;
+
+    public ResponseEntity<String> uploadImage(MultipartFile file) throws IOException {
+
+        ImageData imageData = repository.save(ImageData.builder().name(file.getOriginalFilename())
+                .type(file.getContentType())
+                .imageData(ImageUtils.compressImage(file.getBytes())).build());
+        if (imageData != null) {
+            return  new ResponseEntity<>("file uploaded successfully : " + file.getOriginalFilename(),HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Must contains a file" , HttpStatus.BAD_REQUEST);
+        
+    }
+    
+    public byte[] downloadImage(String fileName){
+        java.util.Optional<ImageData> dbImageData = repository.findByName(fileName);
+        byte[] images=ImageUtils.decompressImage(dbImageData.get().getImageData());
+        return images;
+    }
+}

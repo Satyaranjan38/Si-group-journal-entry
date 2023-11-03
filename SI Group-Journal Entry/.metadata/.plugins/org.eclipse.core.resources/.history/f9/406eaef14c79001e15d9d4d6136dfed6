@@ -1,0 +1,13 @@
+package com.SiGroup;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SiGroupJeAutomationApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SiGroupJeAutomationApplication.class, args);
+	}
+
+}
